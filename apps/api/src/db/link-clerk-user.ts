@@ -1,8 +1,8 @@
 import { Pool } from 'pg';
 
-const required = ['DATABASE_URL', 'CLERK_DEV_ORG_ID', 'CLERK_DEV_USER_ID', 'CLERK_DEV_USER_EMAIL'] as const;
+type RequiredEnv = 'DATABASE_URL' | 'CLERK_DEV_ORG_ID' | 'CLERK_DEV_USER_ID' | 'CLERK_DEV_USER_EMAIL';
 
-function env(name: (typeof required)[number]): string {
+function env(name: RequiredEnv): string {
   const value = process.env[name];
   if (!value) throw new Error(`Missing ${name}`);
   return value;

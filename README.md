@@ -24,6 +24,8 @@ specs/
     security.md
     spec.md
     tasks.md
+  002-ima-b5-daily-rate/
+    spec.md
 ```
 
 ## Setup Local
@@ -113,6 +115,39 @@ npm run db:migrate
 npm run db:seed
 npm run db:link-clerk-user
 ```
+
+## Job Diario IMA-B 5
+
+A feature `002-ima-b5-daily-rate` cria a tabela global `config` com somente:
+
+```sql
+id INTEGER PRIMARY KEY
+taxa_ima_b NUMERIC(9,4)
+```
+
+O job baixa uma planilha `.xls` ou `.xlsx`, localiza o registro mais recente de `IMA-B 5`, le a coluna `Variacao 12 meses (%)` e persiste o valor percentual em `config.id = 1`. Exemplo: `12,8000` vira `12.8000`, sem dividir por 100.
+
+Variaveis em `apps/api/.env`:
+
+```env
+ANBIMA_IMA_B5_XLS_URL=https://...
+ANBIMA_IMA_B5_JOB_ENABLED=true
+ANBIMA_IMA_B5_JOB_TIME=22:00
+ANBIMA_IMA_B5_JOB_TIMEZONE=America/Sao_Paulo
+ANBIMA_IMA_B5_TEMP_DIR=
+ANBIMA_IMA_B5_DOWNLOAD_TIMEOUT_MS=30000
+ANBIMA_IMA_B5_MAX_FILE_SIZE_BYTES=20971520
+```
+
+Notas:
+
+- `ANBIMA_IMA_B5_XLS_URL` deve ser HTTPS.
+- O job roda diariamente no horario configurado em `ANBIMA_IMA_B5_JOB_TIME`; o padrao e `22:00`.
+- `ANBIMA_IMA_B5_JOB_TIME` deve usar formato `HH:mm` no timezone `America/Sao_Paulo`.
+- Quando `ANBIMA_IMA_B5_JOB_ENABLED=true`, a API nao sobe sem URL configurada.
+- Em ambiente local, o `.env.example` deixa o job desabilitado para permitir subir a API sem URL real.
+- Concorrencia entre instancias e bloqueada por PostgreSQL advisory lock.
+- Falhas preservam o ultimo valor valido e removem o arquivo temporario em `finally`.
 
 ## Seguranca E Multi-Tenancy
 
