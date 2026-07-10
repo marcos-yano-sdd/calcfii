@@ -1,0 +1,8 @@
+node_modules/
+dist/
+coverage/
+.angular/
+.env
+.env.local
+apps/web/src/assets/app-config.json
+npm-debug.log*

@@ -1,0 +1,28 @@
+{
+  "name": "secure-saas",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/ensure-workspace-deps.mjs",
+    "dev": "npm run dev --workspace @secure-saas/api",
+    "dev:api": "npm run dev --workspace @secure-saas/api",
+    "dev:web": "npm run start --workspace @secure-saas/web",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "db:migrate": "npm run db:migrate --workspace @secure-saas/api",
+    "db:seed": "npm run db:seed --workspace @secure-saas/api",
+    "db:link-clerk-user": "npm run db:link-clerk-user --workspace @secure-saas/api"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3"
+  },
+  "overrides": {
+    "rxjs": "7.8.1"
+  }
+}

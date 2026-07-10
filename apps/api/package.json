@@ -1,0 +1,42 @@
+{
+  "name": "@secure-saas/api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/load-env.mjs nest start --watch",
+    "build": "nest build",
+    "start": "node dist/main.js",
+    "lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\"",
+    "test": "vitest run",
+    "db:migrate": "node scripts/load-env.mjs node-pg-migrate up -m src/db/migrations --no-check-order",
+    "db:seed": "node scripts/load-env.mjs tsx src/db/seed.ts",
+    "db:link-clerk-user": "node scripts/load-env.mjs tsx src/db/link-clerk-user.ts"
+  },
+  "dependencies": {
+    "@clerk/backend": "^1.18.0",
+    "@fastify/cors": "^9.0.1",
+    "@fastify/helmet": "^11.1.1",
+    "@fastify/rate-limit": "^9.1.0",
+    "@nestjs/common": "^10.4.7",
+    "@nestjs/core": "^10.4.7",
+    "@nestjs/platform-fastify": "^10.4.7",
+    "drizzle-orm": "^0.36.0",
+    "pg": "^8.13.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "7.8.1",
+    "svix": "^1.37.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^10.4.5",
+    "@types/node": "^22.7.5",
+    "@types/pg": "^8.11.10",
+    "@typescript-eslint/eslint-plugin": "^8.8.1",
+    "@typescript-eslint/parser": "^8.8.1",
+    "eslint": "^9.12.0",
+    "node-pg-migrate": "^7.7.1",
+    "supertest": "^7.0.0",
+    "tsx": "^4.19.1",
+    "vitest": "^2.1.2"
+  }
+}

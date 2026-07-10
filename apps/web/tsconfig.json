@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "ES2022",
+    "moduleResolution": "Bundler",
+    "useDefineForClassFields": false,
+    "lib": ["ES2022", "DOM"]
+  }
+}
